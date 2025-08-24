@@ -2,6 +2,7 @@ import Fastify from "fastify"
 import swagger from "@fastify/swagger"
 import swaggerUi from "@fastify/swagger-ui"
 import { loteRoutes } from "./routes/lotes.route"
+import { paymentRoutes } from "./routes/payment.route"
 
 export const buildApp = () => {
   const app = Fastify({ logger: true })
@@ -38,6 +39,7 @@ export const buildApp = () => {
   })
 
   // Rotas
+  app.register(paymentRoutes, { prefix: "/api" })
   app.register(loteRoutes, { prefix: "/api" })
 
   return app

@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const paymentSchema = z.object({
+  id: z.string().uuid(),
   cpf: z.string().min(11).max(11),
   dateTransaction: z.string().datetime(),
   value: z.number().positive(),

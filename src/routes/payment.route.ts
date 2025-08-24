@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
-import { paymentQuerySchema, paymentSchema } from "src/schemas/payment.schema";
-import { PaymentService } from "src/services/payment.service";
+import { paymentQuerySchema, paymentSchema } from "../schemas/payment.schema";
+import { PaymentService } from "../services/payment.service";
 import { createPaymentDoc, getPaymentByCpfDoc, getAllPaymentsDoc } from "../docs/payment.doc";
 
 export async function paymentRoutes(app: FastifyInstance) {
