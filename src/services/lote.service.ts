@@ -5,9 +5,8 @@ import { Payment } from "../entities/Payment"
 import { In } from "typeorm"
 
 const simulateProcessingPayments = (transactions: Payment[], lote: Lote) => {
-  transactions.map((transaction) => {
+  transactions.forEach((transaction) => {
     if (transaction.status === "PEDDING") {
-      // 80% chance de aprovar, 20% chance de cancelar
       const approved = Math.random() < 0.8
       transaction.status = approved ? "APPROVED" : "CANCELED"
 
@@ -20,16 +19,14 @@ const simulateProcessingPayments = (transactions: Payment[], lote: Lote) => {
 
   return {
     transactions,
-    netValue: transactions.reduce((acc, transaction) => acc + Number(transaction.value), 0)
+    netValue: transactions.reduce((acc, t) => acc + Number(t.value), 0),
   }
 }
-
 
 export class LoteService {
   private loteRepo = AppDataSource.getRepository(Lote)
   private paymentRepo = AppDataSource.getRepository(Payment)
 
-  // 🔹 converte DTO (validado pelo Zod) em entidade TypeORM
   private toEntity(dto: LoteDTO): Lote {
     return this.loteRepo.create({
       codeGasStation: dto.codeGasStation,
@@ -39,37 +36,38 @@ export class LoteService {
         end: new Date(dto.period.end),
       },
       tax: dto.tax,
-      transactions: dto.transactions.map(id => ({ id })),
       grossValue: dto.grossValue,
       netValue: dto.netValue,
     })
   }
 
-  // 🔹 cria e persiste o lote
   async create(dto: LoteDTO): Promise<Lote> {
     const lote = this.toEntity(dto)
 
-    const transactions = await this.paymentRepo.find({ where: { id: In(dto.transactions) } })
+    const transactions = await this.paymentRepo.find({
+      where: { id: In(dto.transactions) },
+    })
 
-    const grossValue = transactions.reduce((acc, transaction) => acc + Number(transaction.value), 0)
+    lote.transactions = transactions
+
+    const grossValue = transactions.reduce(
+      (acc, t) => acc + Number(t.value),
+      0
+    )
     lote.grossValue = grossValue
-
 
     return await this.loteRepo.save(lote)
   }
 
-  // busca lote por id (com pagamentos)
   async findById(id: string): Promise<Lote | null> {
-    const lote = await this.loteRepo.findOne({
+    return await this.loteRepo.findOne({
       where: { id },
       relations: ["transactions"],
     })
-    return lote
   }
 
-
-  async findAll(query: LoteQueryDTO): Promise<{ data: Lote[], total: number, page: number, limit: number, totalPages: number }> {
-    const { page, limit, sort } = query;
+  async findAll(query: LoteQueryDTO) {
+    const { page, limit, sort } = query
 
     const [lotes, total] = await this.loteRepo.findAndCount({
       relations: ["transactions"],
@@ -88,15 +86,26 @@ export class LoteService {
   }
 
   async processLote(id: string): Promise<Lote | null> {
+    const lote = await this.loteRepo.findOne({
+      where: { id },
+      relations: ["transactions"],
+    })
+    if (!lote) return null
 
-    const lote = await this.loteRepo.findOne({ where: { id }, relations: ["transactions"] })
+    const transactions = await this.paymentRepo.find({
+      where: { id: In(lote.transactions.map((t) => t.id)) },
+    })
 
-    if (!lote)  return null
+    const { transactions: updated, netValue } = simulateProcessingPayments(
+      transactions,
+      lote
+    )
 
-    const transactions = await this.paymentRepo.find({ where: { id: In(lote.transactions) } })
+    // salva as mudanças nos pagamentos
+    await this.paymentRepo.save(updated)
 
-    const { netValue } = simulateProcessingPayments(transactions, lote)
-    lote.transactions = transactions.map((transaction) => ({ id: transaction.id }))
+    // atualiza lote
+    lote.transactions = updated
     lote.netValue = netValue
 
     return await this.loteRepo.save(lote)
