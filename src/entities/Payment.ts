@@ -10,7 +10,7 @@ export class Payment {
   @PrimaryGeneratedColumn("uuid")
   id!: string
 
-  @Column()
+  @Column("varchar")
   cpf!: string
 
   @Column({ type: "timestamptz" })

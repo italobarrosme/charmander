@@ -3,7 +3,7 @@ import { z } from "zod";
 export const paymentSchema = z.object({
   id: z.string().uuid(),
   cpf: z.string().min(11).max(11),
-  dateTransaction: z.string().datetime(),
+  dateTransaction: z.date(),
   value: z.number().positive(),
   typePayment: z.enum(["PIX", "CREDIT", "MERCADO_PAGO"]),
   status: z.enum(["PEDDING", "APPROVED", "CANCELED", "REVERSED"]),

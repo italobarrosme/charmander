@@ -11,6 +11,10 @@
     "emitDecoratorMetadata": true,
     "types": ["node"],
     "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    },
     "declaration": true
-  }
+  },
+  "exclude": ["vitest.config.ts"]
 }

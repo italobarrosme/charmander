@@ -6,10 +6,10 @@ export class Lote {
   @PrimaryGeneratedColumn("uuid")
   id!: string
 
-  @Column()
+  @Column("varchar")
   codeGasStation!: string
 
-  @Column()
+  @Column("varchar")
   nameGasStation!: string
 
   // range de datas pode ser salvo como json

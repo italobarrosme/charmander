@@ -6,8 +6,8 @@ export const loteSchema = z.object({
     codeGasStation: z.string().min(1),
     nameGasStation: z.string().min(1),
     period: z.object({
-      start: z.string().datetime(),
-      end: z.string().datetime(),
+      start: z.date(),
+      end: z.date(),
     }),
     tax: z.number().min(0),
     transactions: z.array(z.string().uuid()),

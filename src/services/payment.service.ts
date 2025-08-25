@@ -7,6 +7,7 @@ export class PaymentService {
 
   private toEntity(dto: PaymentDTO): Payment {
     return this.paymentRepo.create({
+      id: dto.id,
       cpf: dto.cpf,
       value: dto.value,
       dateTransaction: new Date(dto.dateTransaction),
