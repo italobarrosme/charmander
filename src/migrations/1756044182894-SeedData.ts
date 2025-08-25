@@ -1,9 +1,9 @@
-import { MigrationInterface, QueryRunner } from "typeorm";
+import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class SeedData1756044182894 implements MigrationInterface {
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        // cria 5 lotes
-        await queryRunner.query(`
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    // cria 5 lotes
+    await queryRunner.query(`
           INSERT INTO "lotes" ("id", "codeGasStation", "nameGasStation", "period", "tax")
           VALUES
           (gen_random_uuid(), '001', 'Posto Recife', '{"start":"2025-08-01T00:00:00.000Z","end":"2025-08-31T23:59:59.000Z"}', 2.5),
@@ -11,10 +11,10 @@ export class SeedData1756044182894 implements MigrationInterface {
           (gen_random_uuid(), '003', 'Posto Paulista', '{"start":"2025-08-10T00:00:00.000Z","end":"2025-08-25T23:59:59.000Z"}', 1.5),
           (gen_random_uuid(), '004', 'Posto Jaboatão', '{"start":"2025-08-15T00:00:00.000Z","end":"2025-08-30T23:59:59.000Z"}', 4.0),
           (gen_random_uuid(), '005', 'Posto Abreu e Lima', '{"start":"2025-08-20T00:00:00.000Z","end":"2025-08-31T23:59:59.000Z"}', 2.0)
-        `)
-    
-        // cria 10 pagamentos (2 para cada lote)
-        await queryRunner.query(`
+        `);
+
+    // cria 10 pagamentos (2 para cada lote)
+    await queryRunner.query(`
           INSERT INTO "payments" ("id","cpf","dateTransaction","value","typePayment","status","product","loteId")
           VALUES
           (gen_random_uuid(),'12345678900','2025-08-15T12:00:00.000Z',100,'PIX','PEDDING','SUPPLY',(SELECT "id" FROM "lotes" WHERE "codeGasStation"='001')),
@@ -31,11 +31,11 @@ export class SeedData1756044182894 implements MigrationInterface {
     
           (gen_random_uuid(),'44455566677','2025-08-24T14:00:00.000Z',400,'CREDIT','PEDDING','SERVICES',(SELECT "id" FROM "lotes" WHERE "codeGasStation"='005')),
           (gen_random_uuid(),'88899900011','2025-08-25T18:10:00.000Z',220,'PIX','PEDDING','SUPPLY',(SELECT "id" FROM "lotes" WHERE "codeGasStation"='005'))
-        `)
-      }
-    
-      public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`DELETE FROM "payments"`)
-        await queryRunner.query(`DELETE FROM "lotes"`)
-      }
+        `);
+  }
+
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`DELETE FROM "payments"`);
+    await queryRunner.query(`DELETE FROM "lotes"`);
+  }
 }

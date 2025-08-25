@@ -1,6 +1,6 @@
-import { AppDataSource } from "../config/db";
-import { PaymentDTO, PaymentQueryDTO } from "../schemas/payment.schema";
-import { Payment } from "../entities/Payment";
+import { AppDataSource } from '../config/db';
+import { PaymentDTO, PaymentQueryDTO } from '../schemas/payment.schema';
+import { Payment } from '../entities/Payment';
 
 export class PaymentService {
   private paymentRepo = AppDataSource.getRepository(Payment);
@@ -30,9 +30,7 @@ export class PaymentService {
   }
 
   // 🔹 busca todos os pagamentos
-  async findAll(
-    query: PaymentQueryDTO
-  ): Promise<{
+  async findAll(query: PaymentQueryDTO): Promise<{
     data: Payment[];
     total: number;
     page: number;

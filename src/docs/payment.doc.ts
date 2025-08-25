@@ -1,60 +1,53 @@
 export const createPaymentDoc = {
   schema: {
-    description: "Cria um pagamento",
-    tags: ["Pagamentos"],
+    description: 'Cria um pagamento',
+    tags: ['Pagamentos'],
     body: {
-      type: "object",
+      type: 'object',
       properties: {
-        cpf: { type: "string" },
-        dateTransaction: { type: "string", format: "date-time" },
-        value: { type: "number" },
+        cpf: { type: 'string' },
+        dateTransaction: { type: 'string', format: 'date-time' },
+        value: { type: 'number' },
         typePayment: {
-          type: "string",
-          enum: ["PIX", "CREDIT", "MERCADO_PAGO"],
+          type: 'string',
+          enum: ['PIX', 'CREDIT', 'MERCADO_PAGO'],
         },
         status: {
-          type: "string",
-          enum: ["PEDDING", "APPROVED", "CANCELED", "REVERSED"],
+          type: 'string',
+          enum: ['PEDDING', 'APPROVED', 'CANCELED', 'REVERSED'],
         },
-        product: { type: "string", enum: ["SUPPLY", "SERVICES", "OTHERS"] },
+        product: { type: 'string', enum: ['SUPPLY', 'SERVICES', 'OTHERS'] },
       },
     },
-    required: [
-      "cpf",
-      "dateTransaction",
-      "value",
-      "typePayment",
-      "status",
-      "product",
-    ],
+    required: ['cpf', 'dateTransaction', 'value', 'typePayment', 'status', 'product'],
     response: {
       201: {
-        type: "object",
+        type: 'object',
         properties: {
-          cpf: { type: "string" },
-          dateTransaction: { type: "string", format: "date-time" },
-          value: { type: "number" },
+          cpf: { type: 'string' },
+          dateTransaction: { type: 'string', format: 'date-time' },
+          value: { type: 'number' },
           typePayment: {
-            type: "string",
-            enum: ["PIX", "CREDIT", "MERCADO_PAGO"],
+            type: 'string',
+            enum: ['PIX', 'CREDIT', 'MERCADO_PAGO'],
           },
           status: {
-            type: "string",
-            enum: ["PEDDING", "APPROVED", "CANCELED", "REVERSED"],
+            type: 'string',
+            enum: ['PEDDING', 'APPROVED', 'CANCELED', 'REVERSED'],
           },
-          product: { type: "string", enum: ["SUPPLY", "SERVICES", "OTHERS"] },
+          product: { type: 'string', enum: ['SUPPLY', 'SERVICES', 'OTHERS'] },
         },
       },
       400: {
-        type: "object",
+        type: 'object',
         properties: {
-          message: { type: "string" },
+          message: { type: 'string' },
         },
       },
       500: {
-        type: "object",
+        type: 'object',
         properties: {
-          message: { type: "string" },
+          message: { type: 'string' },
         },
       },
     },
@@ -63,48 +56,48 @@ export const createPaymentDoc = {
 
 export const getPaymentByCpfDoc = {
   schema: {
-    description: "Busca um pagamento por cpf",
-    tags: ["Pagamentos"],
+    description: 'Busca um pagamento por cpf',
+    tags: ['Pagamentos'],
     params: {
-      type: "object",
+      type: 'object',
       properties: {
-        cpf: { type: "string" },
+        cpf: { type: 'string' },
       },
     },
     response: {
       200: {
-        type: "object",
+        type: 'object',
         properties: {
-          cpf: { type: "string" },
-          dateTransaction: { type: "string", format: "date-time" },
-          value: { type: "number" },
+          cpf: { type: 'string' },
+          dateTransaction: { type: 'string', format: 'date-time' },
+          value: { type: 'number' },
           typePayment: {
-            type: "string",
-            enum: ["PIX", "CREDIT", "MERCADO_PAGO"],
+            type: 'string',
+            enum: ['PIX', 'CREDIT', 'MERCADO_PAGO'],
           },
           status: {
-            type: "string",
-            enum: ["PEDDING", "APPROVED", "CANCELED", "REVERSED"],
+            type: 'string',
+            enum: ['PEDDING', 'APPROVED', 'CANCELED', 'REVERSED'],
           },
-          product: { type: "string", enum: ["SUPPLY", "SERVICES", "OTHERS"] },
+          product: { type: 'string', enum: ['SUPPLY', 'SERVICES', 'OTHERS'] },
         },
       },
       404: {
-        type: "object",
+        type: 'object',
         properties: {
-          message: { type: "string" },
+          message: { type: 'string' },
         },
       },
       400: {
-        type: "object",
+        type: 'object',
         properties: {
-          message: { type: "string" },
+          message: { type: 'string' },
         },
       },
       500: {
-        type: "object",
+        type: 'object',
         properties: {
-          message: { type: "string" },
+          message: { type: 'string' },
         },
       },
     },
@@ -113,48 +106,48 @@ export const getPaymentByCpfDoc = {
 
 export const getAllPaymentsDoc = {
   schema: {
-    description: "Busca todos os pagamentos",
-    tags: ["Pagamentos"],
+    description: 'Busca todos os pagamentos',
+    tags: ['Pagamentos'],
     query: {
-      type: "object",
+      type: 'object',
       properties: {
-        page: { type: "number" },
-        limit: { type: "number" },
-        sort: { type: "string", enum: ["ASC", "DESC"] },
+        page: { type: 'number' },
+        limit: { type: 'number' },
+        sort: { type: 'string', enum: ['ASC', 'DESC'] },
       },
     },
   },
   response: {
     200: {
-      type: "array",
+      type: 'array',
       items: {
-        type: "object",
+        type: 'object',
         properties: {
-          cpf: { type: "string" },
-          dateTransaction: { type: "string", format: "date-time" },
-          value: { type: "number" },
+          cpf: { type: 'string' },
+          dateTransaction: { type: 'string', format: 'date-time' },
+          value: { type: 'number' },
           typePayment: {
-            type: "string",
-            enum: ["PIX", "CREDIT", "MERCADO_PAGO"],
+            type: 'string',
+            enum: ['PIX', 'CREDIT', 'MERCADO_PAGO'],
           },
           status: {
-            type: "string",
-            enum: ["PEDDING", "APPROVED", "CANCELED", "REVERSED"],
+            type: 'string',
+            enum: ['PEDDING', 'APPROVED', 'CANCELED', 'REVERSED'],
           },
-          product: { type: "string", enum: ["SUPPLY", "SERVICES", "OTHERS"] },
+          product: { type: 'string', enum: ['SUPPLY', 'SERVICES', 'OTHERS'] },
         },
       },
     },
     400: {
-      type: "object",
+      type: 'object',
       properties: {
-        message: { type: "string" },
+        message: { type: 'string' },
       },
     },
     500: {
-      type: "object",
+      type: 'object',
       properties: {
-        message: { type: "string" },
+        message: { type: 'string' },
       },
     },
   },
