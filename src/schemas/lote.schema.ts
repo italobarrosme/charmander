@@ -10,7 +10,7 @@ export const loteSchema = z.object({
       end: z.string().datetime(),
     }),
     tax: z.number().min(0),
-    transactions: z.array(paymentSchema).min(1),
+    transactions: z.array(z.string().uuid()),
     grossValue: z.number().min(0),
     netValue: z.number().min(0),
   })

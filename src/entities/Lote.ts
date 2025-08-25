@@ -20,7 +20,7 @@ export class Lote {
   tax!: number
 
   @OneToMany(() => Payment, (payment) => payment.lote, { cascade: true })
-  transactions!: Payment[]
+  transactions!: Pick<Payment, "id">[]
 
   @Column("decimal", { precision: 10, scale: 2 })
   grossValue!: number

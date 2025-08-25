@@ -1,8 +1,8 @@
-import { PaymentDTO } from "../schemas/payment.schema"
 import { AppDataSource } from "../config/db"
 import { LoteDTO, LoteQueryDTO } from "../schemas/lote.schema"
 import { Lote } from "../entities/Lote"
 import { Payment } from "../entities/Payment"
+import { In } from "typeorm"
 
 const simulateProcessingPayments = (transactions: Payment[], lote: Lote) => {
   transactions.map((transaction) => {
@@ -39,14 +39,9 @@ export class LoteService {
         end: new Date(dto.period.end),
       },
       tax: dto.tax,
-      transactions: dto.transactions.map((transaction: PaymentDTO) =>
-        this.paymentRepo.create({
-          ...transaction,
-          dateTransaction: new Date(transaction.dateTransaction),
-        })
-      ),
-      grossValue: 0,
-      netValue: 0,
+      transactions: dto.transactions.map(id => ({ id })),
+      grossValue: dto.grossValue,
+      netValue: dto.netValue,
     })
   }
 
@@ -54,7 +49,9 @@ export class LoteService {
   async create(dto: LoteDTO): Promise<Lote> {
     const lote = this.toEntity(dto)
 
-    const grossValue = dto.transactions.reduce((acc, transaction) => acc + Number(transaction.value), 0)
+    const transactions = await this.paymentRepo.find({ where: { id: In(dto.transactions) } })
+
+    const grossValue = transactions.reduce((acc, transaction) => acc + Number(transaction.value), 0)
     lote.grossValue = grossValue
 
 
@@ -91,15 +88,15 @@ export class LoteService {
   }
 
   async processLote(id: string): Promise<Lote | null> {
-    const lote = await this.loteRepo.findOne({
-      where: { id },
-      relations: ["transactions"],
-    })
+
+    const lote = await this.loteRepo.findOne({ where: { id }, relations: ["transactions"] })
 
     if (!lote)  return null
 
-    const { transactions, netValue } = simulateProcessingPayments(lote.transactions, lote)
-    lote.transactions = transactions
+    const transactions = await this.paymentRepo.find({ where: { id: In(lote.transactions) } })
+
+    const { netValue } = simulateProcessingPayments(transactions, lote)
+    lote.transactions = transactions.map((transaction) => ({ id: transaction.id }))
     lote.netValue = netValue
 
     return await this.loteRepo.save(lote)
