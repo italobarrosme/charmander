@@ -1,7 +1,7 @@
-import { AppDataSource } from '../config/db';
-import { LoteDTO, LoteQueryDTO } from '../schemas/lote.schema';
-import { Lote } from '../entities/Lote';
-import { Payment } from '../entities/Payment';
+import { AppDataSource } from '../config/db.js';
+import { LoteDTO, LoteQueryDTO } from '../schemas/lote.schema.js';
+import { Lote } from '../entities/Lote.js';
+import { Payment } from '../entities/Payment.js';
 import { In } from 'typeorm';
 
 const simulateProcessingPayments = (transactions: Payment[], lote: Lote) => {
@@ -29,7 +29,7 @@ export class LoteService {
 
   private toEntity(dto: LoteDTO): Lote {
     return this.loteRepo.create({
-      codeGasStation: dto.codeGasStation,
+      gasStationCode: dto.gasStationCode,
       nameGasStation: dto.nameGasStation,
       period: {
         start: new Date(dto.period.start),

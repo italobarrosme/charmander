@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
-import { paymentQuerySchema, paymentSchema } from '../schemas/payment.schema';
-import { PaymentService } from '../services/payment.service';
-import { createPaymentDoc, getPaymentByCpfDoc, getAllPaymentsDoc } from '../docs/payment.doc';
+import { paymentQuerySchema, paymentSchema } from '../schemas/payment.schema.js';
+import { PaymentService } from '../services/payment.service.js';
+import { createPaymentDoc, getPaymentByCpfDoc, getAllPaymentsDoc } from '../docs/payment.doc.js';
 
 export async function paymentRoutes(app: FastifyInstance) {
   const service = new PaymentService();

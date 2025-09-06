@@ -1,10 +1,10 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
-import { LoteService } from './lote.service';
-import { AppDataSource } from '../config/db';
+import { LoteService } from './lote.service.js';
+import { AppDataSource } from '../config/db.js';
 import { In } from 'typeorm';
 
 // Mock TypeORM
-vi.mock('../config/db', () => ({
+vi.mock('../config/db.js', () => ({
   AppDataSource: {
     getRepository: vi.fn(),
   },
@@ -63,7 +63,7 @@ describe('LoteService', () => {
       transactions: [paymentMock.id],
       grossValue: 100,
       netValue: 90, // após taxa de 10%
-      codeGasStation: '123e4567-e89b-12d3-a456-426614154000',
+      gasStationCode: '123e4567-e89b-12d3-a456-426614154000',
       nameGasStation: 'Gas Station 1',
       period: {
         start: new Date('2024-03-20T00:00:00.000Z'),
@@ -88,7 +88,7 @@ describe('LoteService', () => {
     });
     expect(mockLoteRepo.create).toHaveBeenCalledWith(
       expect.objectContaining({
-        codeGasStation: loteMock.codeGasStation,
+        gasStationCode: loteMock.gasStationCode,
         nameGasStation: loteMock.nameGasStation,
         period: loteMock.period,
         tax: loteMock.tax,
@@ -114,7 +114,7 @@ describe('LoteService', () => {
       transactions: [paymentMock],
       grossValue: 100,
       netValue: 90,
-      codeGasStation: '123e4567-e89b-12d3-a456-426614154000',
+      gasStationCode: '123e4567-e89b-12d3-a456-426614154000',
       nameGasStation: 'Gas Station 1',
       period: {
         start: new Date('2024-03-20T00:00:00.000Z'),

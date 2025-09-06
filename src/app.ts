@@ -1,8 +1,8 @@
 import Fastify from 'fastify';
 import swagger from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
-import { loteRoutes } from './routes/lotes.route';
-import { paymentRoutes } from './routes/payment.route';
+import { loteRoutes } from './routes/lotes.route.js';
+import { paymentRoutes } from './routes/payment.route.js';
 
 export const buildApp = () => {
   const app = Fastify({ logger: true });

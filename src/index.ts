@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-import { connectDB } from './config/db';
-import { buildApp } from './app';
+import { connectDB } from './config/db.js';
+import { buildApp } from './app.js';
 
 const start = async () => {
   try {

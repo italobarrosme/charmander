@@ -9,7 +9,7 @@ export class CreateTables1756044102558 implements MigrationInterface {
     await queryRunner.query(`
           CREATE TABLE "lotes" (
             "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-            "codeGasStation" varchar NOT NULL,
+            "gasStationCode" varchar NOT NULL,
             "nameGasStation" varchar NOT NULL,
             "period" jsonb NOT NULL,
             "tax" numeric(5,2) NOT NULL

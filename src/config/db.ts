@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
-import { Payment } from '../entities/Payment';
-import { Lote } from '../entities/Lote';
+import { Payment } from '../entities/Payment.js';
+import { Lote } from '../entities/Lote.js';
 
 const MAX_RETRIES = 5;
 const RETRY_DELAY = 3000;

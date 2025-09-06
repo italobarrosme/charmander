@@ -1,6 +1,6 @@
-import { AppDataSource } from '../config/db';
-import { PaymentDTO, PaymentQueryDTO } from '../schemas/payment.schema';
-import { Payment } from '../entities/Payment';
+import { AppDataSource } from '../config/db.js';
+import { PaymentDTO, PaymentQueryDTO } from '../schemas/payment.schema.js';
+import { Payment } from '../entities/Payment.js';
 
 export class PaymentService {
   private paymentRepo = AppDataSource.getRepository(Payment);

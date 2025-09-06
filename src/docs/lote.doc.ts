@@ -5,7 +5,7 @@ export const createLoteDoc = {
     body: {
       type: 'object',
       properties: {
-        codeGasStation: { type: 'string' },
+        gasStationCode: { type: 'string' },
         nameGasStation: { type: 'string' },
         period: {
           type: 'object',
@@ -41,7 +41,7 @@ export const createLoteDoc = {
           },
         },
       },
-      required: ['codeGasStation', 'nameGasStation', 'period', 'tax', 'transactions'],
+      required: ['gasStationCode', 'nameGasStation', 'period', 'tax', 'transactions'],
     },
     response: {
       201: {

@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Payment } from './Payment';
+import { Payment } from './Payment.js';
 
 @Entity('lotes')
 export class Lote {
@@ -7,7 +7,7 @@ export class Lote {
   id!: string;
 
   @Column('varchar')
-  codeGasStation!: string;
+  gasStationCode!: string;
 
   @Column('varchar')
   nameGasStation!: string;

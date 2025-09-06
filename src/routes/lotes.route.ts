@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
-import { loteQuerySchema, loteSchema } from '../schemas/lote.schema';
-import { LoteService } from '../services/lote.service';
-import { createLoteDoc, getLoteByIdDoc, getAllLotesDoc, processLoteDoc } from '../docs/lote.doc';
+import { loteQuerySchema, loteSchema } from '../schemas/lote.schema.js';
+import { LoteService } from '../services/lote.service.js';
+import { createLoteDoc, getLoteByIdDoc, getAllLotesDoc, processLoteDoc } from '../docs/lote.doc.js';
 
 export async function loteRoutes(app: FastifyInstance) {
   const service = new LoteService();

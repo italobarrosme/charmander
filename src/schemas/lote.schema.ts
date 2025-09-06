@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const loteSchema = z.object({
   id: z.string().uuid(),
-  codeGasStation: z.string().min(1),
+  gasStationCode: z.string().min(1),
   nameGasStation: z.string().min(1),
   period: z.object({
     start: z.date(),

@@ -1,10 +1,10 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
-import { PaymentService } from './payment.service';
-import { AppDataSource } from '../config/db';
-import { PaymentType, PaymentStatus, ProductType } from '../entities/Payment';
+import { PaymentService } from './payment.service.js';
+import { AppDataSource } from '../config/db.js';
+import { PaymentType, PaymentStatus, ProductType } from '../entities/Payment.js';
 
 // Mock do TypeORM
-vi.mock('../config/db', () => ({
+vi.mock('../config/db.js', () => ({
   AppDataSource: {
     getRepository: vi.fn(),
   },

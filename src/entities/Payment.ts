@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { Lote } from './Lote';
+import { Lote } from './Lote.js';
 
 export type PaymentType = 'PIX' | 'CREDIT' | 'MERCADO_PAGO';
 export type PaymentStatus = 'PEDDING' | 'APPROVED' | 'CANCELED' | 'REVERSED';
